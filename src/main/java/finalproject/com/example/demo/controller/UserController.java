@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PutMapping("/me/password")
-    @PreAuthorize("isAuthenticated()")
+    //@PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest req) {
         Boolean result = userService.changePassword(req.getOldPassword(), req.getNewPassword(), req.getRepeatNewPassword());
 
