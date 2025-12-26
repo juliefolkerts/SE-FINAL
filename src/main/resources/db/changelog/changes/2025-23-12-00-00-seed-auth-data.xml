@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog.xsd">
+
+    <changeSet id="2025-23-12-00-00-seed-auth-data" author="jvm">
+        <insert tableName="t_roles">
+            <column name="role" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="t_roles">
+            <column name="role" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="t_roles">
+            <column name="role" value="ROLE_SELLER"/>
+        </insert>
+
+        <insert tableName="t_users">
+            <column name="email" value="julievmf@gmail.com"/>
+            <column name="password" value="$2a$10$Dow1b/0GINuD/7/UZ5EKeu5odIZ6Tn6PvxI6Bfq5lHppZArYrusRK"/>
+            <column name="full_name" value="Julie Folkerts"/>
+            <column name="blocked" valueBoolean="false"/>
+            <column name="created_at" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <sql stripComments="true">
+            INSERT INTO user_roles (user_id, role_id)
+            SELECT u.id, r.id
+            FROM t_users u, t_roles r
+            WHERE u.email = 'julievmf@gmail.com' AND r.role = 'ROLE_ADMIN';
+        </sql>
+    </changeSet>
+</databaseChangeLog>
